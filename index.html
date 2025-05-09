@@ -3,286 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Car Dodger</title>
+    <title>My Cool Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Basic Reset & Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* For smooth scrolling to sections */
+        }
+
         body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text */
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 3em; }
+        h2 { font-size: 2.2em; text-align: center; }
+        h3 { font-size: 1.5em; color: #bb86fc; /* Accent color */}
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #bb86fc; /* Accent color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #cf9eff;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #bb86fc;
+            color: #121212;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(187, 134, 252, 0.2);
+        }
+
+        .btn:hover {
+            background-color: #cf9eff;
+            transform: translateY(-2px);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(30, 30, 30, 0.9); /* Slightly transparent dark */
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        header .container {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px; /* Override container padding for header */
+            max-width: 1200px;
+        }
+
+        #logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        nav ul li a:hover {
+            color: #bb86fc;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.9)), url('https://source.unsplash.com/random/1600x900/?space,abstract') no-repeat center center/cover;
+            min-height: 80vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #111;
-            font-family: Arial, sans-serif;
-            color: white;
+            text-align: center;
+            padding: 0 20px; /* Ensure padding for content on small screens */
         }
-        canvas {
-            border: 1px solid #555;
-            background-color: #000; /* Deep space */
+
+        #hero .hero-content {
+            max-width: 700px;
         }
-        #instructions {
-            margin-top: 10px;
+
+        #hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #c0c0c0;
+        }
+
+        /* Features Section */
+        #features {
+            background-color: #1e1e1e; /* Slightly lighter dark */
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background-color: #2a2a2a; /* Card background */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(187, 134, 252, 0.15);
+        }
+
+        .feature-item .icon {
+            font-size: 2.5em;
+            color: #bb86fc;
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        #about {
+            background-color: #121212;
+        }
+        #about .container { text-align: center; max-width: 800px; }
+
+        /* Contact Section */
+        #contact {
+            background-color: #1e1e1e;
+            text-align: center;
+        }
+
+        #contact form {
+            max-width: 600px;
+            margin: 30px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #contact input[type="text"],
+        #contact input[type="email"],
+        #contact textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        #contact input[type="text"]::placeholder,
+        #contact input[type="email"]::placeholder,
+        #contact textarea::placeholder {
+            color: #888;
+        }
+
+        #contact textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        #contact .btn {
+            align-self: center;
+            cursor: pointer;
+        }
+
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #0a0a0a; /* Even darker for footer */
             font-size: 0.9em;
-            color: #ccc;
         }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            #logo { margin-bottom: 10px; }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 8px 0;
+            }
+
+            h1 { font-size: 2.5em; }
+            #hero h1 { font-size: 2.8em; }
+            h2 { font-size: 1.8em; }
+
+            .features-grid {
+                grid-template-columns: 1fr; /* Stack cards on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2em; }
+            #hero h1 { font-size: 2.2em; }
+            #hero p { font-size: 1em; }
+            .btn { padding: 10px 20px; font-size: 0.9em;}
+            .container { padding: 40px 15px; }
+        }
+
     </style>
 </head>
 <body>
-    <h1>Space Car Dodger</h1>
-    <canvas id="gameCanvas"></canvas>
-    <div id="instructions">
-        Use Left/Right Arrow keys to move. Avoid the red aliens!
-        <br>Press 'R' to restart after Game Over.
-    </div>
 
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
+    <header>
+        <div class="container">
+            <a href="#" id="logo">MyProject</a>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        // Game settings
-        canvas.width = 600;
-        canvas.height = 400;
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Welcome to My Awesome Project</h1>
+                <p>Discover innovation and creativity like never before. We're building the future, one line of code at a time.</p>
+                <a href="#features" class="btn">Learn More</a>
+            </div>
+        </section>
 
-        let score = 0;
-        let gameOver = false;
-        let gameRunning = true;
+        <section id="features" class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon">🚀</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Experience blazing speed and performance that keeps you ahead of the curve.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🎨</div>
+                    <h3>Sleek Design</h3>
+                    <p>Beautifully crafted interfaces that are intuitive and enjoyable to use.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🔒</div>
+                    <h3>Secure & Reliable</h3>
+                    <p>Built with security in mind, ensuring your data and interactions are safe.</p>
+                </div>
+                 <div class="feature-item">
+                    <div class="icon">📱</div>
+                    <h3>Fully Responsive</h3>
+                    <p>Looks and works great on any device, from desktops to mobile phones.</p>
+                </div>
+            </div>
+        </section>
 
-        // Player (Car)
-        const player = {
-            x: canvas.width / 2 - 25,
-            y: canvas.height - 60,
-            width: 50,
-            height: 30,
-            color: 'dodgerblue',
-            speed: 7,
-            dx: 0 // Direction of movement
-        };
+        <section id="about" class="container">
+            <h2>About Us</h2>
+            <p>We are a passionate team dedicated to creating amazing digital experiences. Our mission is to push the boundaries of technology and design to deliver solutions that inspire and empower.</p>
+            <p>This project is a testament to our commitment to excellence and innovation. We hope you enjoy exploring it as much as we enjoyed building it!</p>
+        </section>
 
-        // Aliens
-        let aliens = [];
-        const alienProps = {
-            width: 30,
-            height: 30,
-            color: 'red',
-            baseSpeed: 2,
-            spawnInterval: 120 // Frames between spawns (60 FPS ~ 2 seconds)
-        };
-        let spawnTimer = 0;
+        <section id="contact" class="container">
+            <h2>Get In Touch</h2>
+            <p>Have questions or want to collaborate? We'd love to hear from you!</p>
+            <form action="#" method="POST"> <!-- Update action for actual form submission -->
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </section>
+    </main>
 
-        // Stars (for background effect)
-        let stars = [];
-        function createStars() {
-            stars = [];
-            for (let i = 0; i < 100; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 1.5,
-                    alpha: Math.random() * 0.5 + 0.5 // Opacity
-                });
-            }
-        }
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 My Cool Project. All Rights Reserved. Designed with ❤️.</p>
+        </div>
+    </footer>
 
-        function drawStars() {
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-                ctx.fill();
-
-                // Move stars slightly for parallax effect (optional)
-                star.y += 0.2;
-                if (star.y > canvas.height) {
-                    star.y = 0;
-                    star.x = Math.random() * canvas.width;
-                }
-            });
-        }
-
-        // --- Drawing Functions ---
-        function drawPlayer() {
-            ctx.fillStyle = player.color;
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-            // Simple "headlight"
-            ctx.fillStyle = 'yellow';
-            ctx.fillRect(player.x + player.width / 2 - 2, player.y - 5, 4, 5);
-        }
-
-        function drawAliens() {
-            aliens.forEach(alien => {
-                ctx.fillStyle = alien.color;
-                ctx.fillRect(alien.x, alien.y, alien.width, alien.height);
-                // Simple "eyes"
-                ctx.fillStyle = 'white';
-                ctx.fillRect(alien.x + 5, alien.y + 5, 5, 5);
-                ctx.fillRect(alien.x + alien.width - 10, alien.y + 5, 5, 5);
-
-            });
-        }
-
-        function drawScore() {
-            ctx.fillStyle = 'white';
-            ctx.font = '20px Arial';
-            ctx.fillText(`Score: ${score}`, 10, 30);
-        }
-
-        function drawGameOver() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            ctx.fillRect(0, canvas.height / 2 - 50, canvas.width, 100);
-
-            ctx.fillStyle = 'red';
-            ctx.font = '40px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
-            ctx.fillStyle = 'white';
-            ctx.font = '20px Arial';
-            ctx.fillText(`Final Score: ${score}`, canvas.width / 2, canvas.height / 2 + 30);
-        }
-
-        // --- Update Functions ---
-        function updatePlayer() {
-            player.x += player.dx;
-
-            // Boundary detection
-            if (player.x < 0) {
-                player.x = 0;
-            }
-            if (player.x + player.width > canvas.width) {
-                player.x = canvas.width - player.width;
-            }
-        }
-
-        function spawnAlien() {
-            const x = Math.random() * (canvas.width - alienProps.width);
-            const speed = alienProps.baseSpeed + Math.random() * 2 + (score / 200); // Speed increases with score
-            aliens.push({
-                x: x,
-                y: -alienProps.height, // Start above screen
-                width: alienProps.width,
-                height: alienProps.height,
-                color: alienProps.color,
-                speed: speed
-            });
-        }
-
-        function updateAliens() {
-            spawnTimer++;
-            if (spawnTimer >= alienProps.spawnInterval) {
-                spawnAlien();
-                spawnTimer = 0;
-                // Make spawning faster over time (optional difficulty increase)
-                if (alienProps.spawnInterval > 40) {
-                     alienProps.spawnInterval -= 2;
-                }
-            }
-
-            aliens.forEach((alien, index) => {
-                alien.y += alien.speed;
-
-                // Remove aliens that go off screen
-                if (alien.y > canvas.height) {
-                    aliens.splice(index, 1);
-                    score++; // Score for successfully avoided alien
-                }
-
-                // Collision detection
-                if (
-                    player.x < alien.x + alien.width &&
-                    player.x + player.width > alien.x &&
-                    player.y < alien.y + alien.height &&
-                    player.y + player.height > alien.y
-                ) {
-                    gameOver = true;
-                    gameRunning = false;
-                }
-            });
-        }
-
-        // --- Game Loop ---
-        function gameLoop() {
-            if (!gameRunning && !gameOver) { // Paused or just started
-                requestAnimationFrame(gameLoop);
-                return;
-            }
-            if (gameOver) {
-                drawGameOverScreen();
-                return; // Stop the game loop
-            }
-
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw background elements
-            drawStars();
-
-            // Update and Draw game elements
-            updatePlayer();
-            drawPlayer();
-
-            updateAliens();
-            drawAliens();
-
-            drawScore();
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        function drawGameOverScreen() {
-            // Can draw one last frame if desired, or just the game over message
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawStars(); // Keep stars for effect
-            drawPlayer(); // Show player at point of impact
-            drawAliens(); // Show aliens
-            drawScore();
-            drawGameOver();
-        }
-
-        // --- Event Listeners ---
-        function keyDown(e) {
-            if (e.key === 'ArrowRight' || e.key === 'Right') {
-                player.dx = player.speed;
-            } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
-                player.dx = -player.speed;
-            } else if (e.key === 'r' || e.key === 'R') {
-                if (gameOver) {
-                    resetGame();
-                }
-            }
-        }
-
-        function keyUp(e) {
-            if (
-                e.key === 'ArrowRight' || e.key === 'Right' ||
-                e.key === 'ArrowLeft' || e.key === 'Left'
-            ) {
-                player.dx = 0;
-            }
-        }
-
-        document.addEventListener('keydown', keyDown);
-        document.addEventListener('keyup', keyUp);
-
-        // --- Reset Game ---
-        function resetGame() {
-            score = 0;
-            gameOver = false;
-            gameRunning = true;
-            player.x = canvas.width / 2 - 25;
-            player.y = canvas.height - 60;
-            player.dx = 0;
-            aliens = [];
-            spawnTimer = 0;
-            alienProps.spawnInterval = 120; // Reset spawn interval
-            alienProps.baseSpeed = 2; // Reset alien base speed
-            createStars(); // Re-randomize stars
-            ctx.textAlign = 'left'; // Reset text align for score
-            gameLoop();
-        }
-
-        // --- Initialize ---
-        createStars();
-        resetGame(); // Start the game on load
-
-    </script>
 </body>
 </html>
