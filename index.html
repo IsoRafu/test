@@ -1,345 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cool Project</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Tilaseuranta</title>
     <style>
-        /* Basic Reset & Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth; /* For smooth scrolling to sections */
+        :root {
+            --primary-bg: #f4f4f8;
+            --secondary-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #007bff;
+            --accent-hover: #0056b3;
+            --border-color: #dddddd;
+            --syomassa-color: #28a745; /* Green */
+            --panemassa-color: #dc3545; /* Red */
+            --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #121212; /* Dark background */
-            color: #e0e0e0; /* Light text */
-            line-height: 1.7;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .container {
             width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 60px 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
         }
 
-        h1, h2, h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: #ffffff;
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--accent-color);
+            font-size: 1.8em; /* Good for mobile */
+        }
+
+        .input-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .input-form input[type="text"],
+        .input-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            -webkit-appearance: none; /* Removes default iOS styling for select */
+            -moz-appearance: none;
+            appearance: none;
+            background-color: white; /* Ensures select background is white on iOS */
+        }
+        /* Custom arrow for select on iOS */
+        .input-form select {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            padding-right: 30px; /* Make space for arrow */
+        }
+
+
+        .status-options {
             margin-bottom: 20px;
         }
 
-        h1 { font-size: 3em; }
-        h2 { font-size: 2.2em; text-align: center; }
-        h3 { font-size: 1.5em; color: #bb86fc; /* Accent color */}
-
-        p {
-            margin-bottom: 15px;
+        .status-options label {
+            display: inline-block; /* Changed from block */
+            margin-right: 15px;
+            font-weight: normal;
+            cursor: pointer;
+            position: relative;
+            padding-left: 30px; /* Space for custom radio */
+            font-size: 1em;
+            user-select: none; /* Prevent text selection on tap */
         }
-
-        a {
-            color: #bb86fc; /* Accent color */
-            text-decoration: none;
-            transition: color 0.3s ease;
+        .status-options input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
         }
-
-        a:hover {
-            color: #cf9eff;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #bb86fc;
-            color: #121212;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(187, 134, 252, 0.2);
-        }
-
-        .btn:hover {
-            background-color: #cf9eff;
-            transform: translateY(-2px);
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: rgba(30, 30, 30, 0.9); /* Slightly transparent dark */
-            padding: 15px 0;
-            position: sticky;
+        .checkmark {
+            position: absolute;
             top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: #eee;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+        .status-options input[type="radio"]:checked ~ .checkmark {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .status-options input[type="radio"]:checked ~ .checkmark:after {
+            display: block;
+        }
+        .status-options .checkmark:after { /* Custom checkmark style */
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
         }
 
-        header .container {
+
+        .input-form button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .input-form button:hover, .input-form button:focus {
+            background-color: var(--accent-hover);
+            outline: none;
+        }
+        .input-form button:active {
+            transform: translateY(1px);
+        }
+
+        #user-list-container {
+            margin-top: 30px;
+        }
+
+        #user-list-container h2 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        #userList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #userList li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px; /* Override container padding for header */
-            max-width: 1200px;
-        }
-
-        #logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8em;
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-left: 25px;
-        }
-
-        nav ul li a {
-            font-weight: 600;
-            color: #e0e0e0;
-        }
-        nav ul li a:hover {
-            color: #bb86fc;
-        }
-
-        /* Hero Section */
-        #hero {
-            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.9)), url('https://source.unsplash.com/random/1600x900/?space,abstract') no-repeat center center/cover;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px; /* Ensure padding for content on small screens */
-        }
-
-        #hero .hero-content {
-            max-width: 700px;
-        }
-
-        #hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        #hero p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            color: #c0c0c0;
-        }
-
-        /* Features Section */
-        #features {
-            background-color: #1e1e1e; /* Slightly lighter dark */
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .feature-item {
-            background-color: #2a2a2a; /* Card background */
-            padding: 30px;
+            padding: 12px 15px;
+            background-color: #fff;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(187, 134, 252, 0.15);
+        #userList .user-name {
+            font-weight: 600;
+            flex-grow: 1;
         }
 
-        .feature-item .icon {
-            font-size: 2.5em;
-            color: #bb86fc;
-            margin-bottom: 15px;
-        }
-
-        /* About Section */
-        #about {
-            background-color: #121212;
-        }
-        #about .container { text-align: center; max-width: 800px; }
-
-        /* Contact Section */
-        #contact {
-            background-color: #1e1e1e;
+        #userList .user-status {
+            padding: 5px 10px;
+            border-radius: 15px; /* Pill shape */
+            font-size: 0.85em;
+            font-weight: bold;
+            color: white;
+            min-width: 90px; /* Ensure consistent width */
             text-align: center;
         }
 
-        #contact form {
-            max-width: 600px;
-            margin: 30px auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+        .status-syomassa { background-color: var(--syomassa-color); }
+        .status-panemassa { background-color: var(--panemassa-color); }
+        .status-none { background-color: #6c757d; } /* Grey for no status */
 
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #444;
-            background-color: #2a2a2a;
-            color: #e0e0e0;
-            border-radius: 5px;
-            font-family: 'Open Sans', sans-serif;
-        }
-        #contact input[type="text"]::placeholder,
-        #contact input[type="email"]::placeholder,
-        #contact textarea::placeholder {
-            color: #888;
-        }
-
-        #contact textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        #contact .btn {
-            align-self: center;
+        #userList .remove-btn {
+            background: none;
+            border: none;
+            color: #cc0000;
+            font-size: 1.5em; /* Make it easier to tap */
             cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+         #userList .remove-btn:hover {
+            color: #ff0000;
         }
 
+        .info-text {
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 30px;
+        }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 30px 20px;
-            background-color: #0a0a0a; /* Even darker for footer */
-            font-size: 0.9em;
+            padding: 15px;
+            font-size: 0.8em;
+            color: #777;
+            margin-top: auto; /* Pushes footer to bottom */
+            background-color: #e9e9ef;
+            border-top: 1px solid var(--border-color);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            header .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            #logo { margin-bottom: 10px; }
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            nav ul li {
-                margin: 8px 0;
-            }
-
-            h1 { font-size: 2.5em; }
-            #hero h1 { font-size: 2.8em; }
-            h2 { font-size: 1.8em; }
-
-            .features-grid {
-                grid-template-columns: 1fr; /* Stack cards on smaller screens */
-            }
+        /* Error message styling */
+        #errorMessage {
+            color: var(--panemassa-color);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
         }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 2em; }
-            #hero h1 { font-size: 2.2em; }
-            #hero p { font-size: 1em; }
-            .btn { padding: 10px 20px; font-size: 0.9em;}
-            .container { padding: 40px 15px; }
-        }
-
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <a href="#" id="logo">MyProject</a>
-            <nav>
-                <ul>
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+    <div class="container">
+        <header>
+            <h1>Tilaseuranta</h1>
+        </header>
+
+        <div id="errorMessage"></div>
+
+        <form id="statusForm" class="input-form">
+            <div>
+                <label for="nameInput">Nimesi:</label>
+                <input type="text" id="nameInput" placeholder="Kirjoita nimesi" required>
+            </div>
+
+            <label>Valitse tila:</label>
+            <div class="status-options">
+                <label for="statusSyomassa">Syömässä
+                    <input type="radio" id="statusSyomassa" name="status" value="Syömässä" checked>
+                    <span class="checkmark"></span>
+                </label>
+                <label for="statusPanemassa">Panemassa
+                    <input type="radio" id="statusPanemassa" name="status" value="Panemassa">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <button type="submit" id="setStatusButton">Päivitä Tila</button>
+        </form>
+
+        <div id="user-list-container">
+            <h2>Nykyiset Tilat (<span id="userCount">0</span>/20)</h2>
+            <ul id="userList">
+                <!-- User items will be dynamically added here -->
+            </ul>
         </div>
-    </header>
 
-    <main>
-        <section id="hero">
-            <div class="hero-content">
-                <h1>Welcome to My Awesome Project</h1>
-                <p>Discover innovation and creativity like never before. We're building the future, one line of code at a time.</p>
-                <a href="#features" class="btn">Learn More</a>
-            </div>
-        </section>
-
-        <section id="features" class="container">
-            <h2>Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="icon">🚀</div>
-                    <h3>Lightning Fast</h3>
-                    <p>Experience blazing speed and performance that keeps you ahead of the curve.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="icon">🎨</div>
-                    <h3>Sleek Design</h3>
-                    <p>Beautifully crafted interfaces that are intuitive and enjoyable to use.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="icon">🔒</div>
-                    <h3>Secure & Reliable</h3>
-                    <p>Built with security in mind, ensuring your data and interactions are safe.</p>
-                </div>
-                 <div class="feature-item">
-                    <div class="icon">📱</div>
-                    <h3>Fully Responsive</h3>
-                    <p>Looks and works great on any device, from desktops to mobile phones.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="container">
-            <h2>About Us</h2>
-            <p>We are a passionate team dedicated to creating amazing digital experiences. Our mission is to push the boundaries of technology and design to deliver solutions that inspire and empower.</p>
-            <p>This project is a testament to our commitment to excellence and innovation. We hope you enjoy exploring it as much as we enjoyed building it!</p>
-        </section>
-
-        <section id="contact" class="container">
-            <h2>Get In Touch</h2>
-            <p>Have questions or want to collaborate? We'd love to hear from you!</p>
-            <form action="#" method="POST"> <!-- Update action for actual form submission -->
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
-        </section>
-    </main>
+        <p class="info-text">Tiedot tallennetaan paikallisesti selaimeesi.</p>
+    </div>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2023 My Cool Project. All Rights Reserved. Designed with ❤️.</p>
-        </div>
+        &copy; 2023 Sinun Projektisi
     </footer>
 
+    <script>
+        const nameInput = document.getElementById('nameInput');
+        const setStatusButton = document.getElementById('setStatusButton');
+        const userListUL = document.getElementById('userList');
+        const statusForm = document.getElementById('statusForm');
+        const userCountSpan = document.getElementById('userCount');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        const MAX_USERS = 20;
+        const LOCAL_STORAGE_KEY = 'statusTrackerUsers';
+
+        let users = [];
+
+        function loadUsers() {
+            const storedUsers = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedUsers) {
+                users = JSON.parse(storedUsers);
+            }
+            renderUsers();
+        }
+
+        function saveUsers() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
+        }
+
+        function displayError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = 'block';
+        }
+        function clearError() {
+            errorMessageDiv.textContent = '';
+            errorMessageDiv.style.display = 'none';
+        }
+
+        function renderUsers() {
+            userListUL.innerHTML = ''; // Clear existing list
+            userCountSpan.textContent = users.length;
+
+            if (users.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'Ei käyttäjiä vielä.';
+                li.style.textAlign = 'center';
+                li.style.fontStyle = 'italic';
+                li.style.color = '#777';
+                userListUL.appendChild(li);
+                return;
+            }
+
+            users.forEach((user, index) => {
+                const li = document.createElement('li');
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'user-name';
+                nameSpan.textContent = user.name;
+
+                const statusSpan = document.createElement('span');
+                statusSpan.className = 'user-status';
+                statusSpan.textContent = user.status;
+                if (user.status === 'Syömässä') {
+                    statusSpan.classList.add('status-syomassa');
+                } else if (user.status === 'Panemassa') {
+                    statusSpan.classList.add('status-panemassa');
+                } else {
+                    statusSpan.classList.add('status-none');
+                }
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'remove-btn';
+                removeButton.innerHTML = '&times;'; // Multiplication sign as 'x'
+                removeButton.setAttribute('aria-label', 'Poista käyttäjä');
+                removeButton.onclick = () => removeUser(index);
+
+                li.appendChild(nameSpan);
+                li.appendChild(statusSpan);
+                li.appendChild(removeButton);
+                userListUL.appendChild(li);
+            });
+        }
+
+        function addUser(name, status) {
+            clearError();
+            if (!name.trim()) {
+                displayError("Nimi ei voi olla tyhjä.");
+                return;
+            }
+
+            const existingUserIndex = users.findIndex(u => u.name.toLowerCase() === name.trim().toLowerCase());
+
+            if (existingUserIndex > -1) {
+                // Update existing user's status
+                users[existingUserIndex].status = status;
+            } else {
+                // Add new user
+                if (users.length >= MAX_USERS) {
+                    users.shift(); // Remove the oldest user (first in array)
+                }
+                users.push({ name: name.trim(), status });
+            }
+
+            saveUsers();
+            renderUsers();
+            nameInput.value = ''; // Clear input after adding
+            // Optionally, reset radio button to default
+            document.getElementById('statusSyomassa').checked = true;
+        }
+
+        function removeUser(index) {
+            clearError();
+            users.splice(index, 1);
+            saveUsers();
+            renderUsers();
+        }
+
+        statusForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+            const name = nameInput.value;
+            const selectedStatus = document.querySelector('input[name="status"]:checked').value;
+            addUser(name, selectedStatus);
+        });
+
+        // Load users on page load
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
 </body>
 </html>
